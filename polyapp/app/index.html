@@ -120,21 +120,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         <section data-route="home">
                             <paper-material elevation="1">
                                 <!--                <my-greeting></my-greeting>-->
-                                <audio-player title="This is a title" src="audio/test.mp3"></audio-player>
+                                <meditation-player title="This is a title" music-src="audio/music/grey_sea.mp3" speech-src="audio/speech/transition_home.mp3"></meditation-player>
+                                <!--                                <meditation-player title="This IS Meditation" src="audio/speech/transition_home.mp3"></meditation-player>-->
 
                                 <!--
-                <p class="subhead">You now have:</p>
+                <p class="subhead ">You now have:</p>
                 <my-list></my-list>
 
-                <p>Looking for more Web App layouts? Check out our <a href="https://github.com/PolymerElements/app-layout-templates">layouts</a> collection. You can also <a href="http://polymerelements.github.io/app-layout-templates/">preview</a> them live.</p>
+                <p>Looking for more Web App layouts? Check out our <a href="https://github.com/PolymerElements/app-layout-templates ">layouts</a> collection. You can also <a href="http://polymerelements.github.io/app-layout-templates/ ">preview</a> them live.</p>
               </paper-material>
 
-              <paper-material elevation="1">
+              <paper-material elevation="1 ">
                 <p>This is another card.</p>
               </paper-material>
 
-              <paper-material elevation="1">
-                <h1 id="license">License</h1>
+              <paper-material elevation="1 ">
+                <h1 id="license ">License</h1>
                 <p>Everything in this repo is BSD style license unless otherwise specified.</p>
                 <p>Copyright (c) 2015 The Polymer Authors. All rights reserved.</p>
                 <p>Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:</p>
@@ -154,30 +155,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
                         </section>
 
-                        <section data-route="users">
-                            <paper-material elevation="1">
-                                <h2 class="page-title">Users</h2>
+                        <section data-route="users ">
+                            <paper-material elevation="1 ">
+                                <h2 class="page-title ">Users</h2>
                                 <p>This is the users section</p>
-                                <a href$="{{baseUrl}}users/Addy">Addy</a>
+                                <a href$="{{baseUrl}}users/Addy ">Addy</a>
                                 <br>
-                                <a href$="{{baseUrl}}users/Rob">Rob</a>
+                                <a href$="{{baseUrl}}users/Rob ">Rob</a>
                                 <br>
-                                <a href$="{{baseUrl}}users/Chuck">Chuck</a>
+                                <a href$="{{baseUrl}}users/Chuck ">Chuck</a>
                                 <br>
-                                <a href$="{{baseUrl}}users/Sam">Sam</a>
+                                <a href$="{{baseUrl}}users/Sam ">Sam</a>
                             </paper-material>
                         </section>
 
-                        <section data-route="user-info">
-                            <paper-material elevation="1">
-                                <h2 class="page-title">User: {{params.name}}</h2>
+                        <section data-route="user-info ">
+                            <paper-material elevation="1 ">
+                                <h2 class="page-title ">User: {{params.name}}</h2>
                                 <div>This is {{params.name}}'s section</div>
                             </paper-material>
                         </section>
 
-                        <section data-route="contact">
-                            <paper-material elevation="1">
-                                <h2 class="page-title">Contact</h2>
+                        <section data-route="contact ">
+                            <paper-material elevation="1 ">
+                                <h2 class="page-title ">Contact</h2>
                                 <p>This is the contact section</p>
                             </paper-material>
                         </section>
@@ -186,24 +187,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </paper-scroll-header-panel>
         </paper-drawer-panel>
 
-        <paper-toast id="toast">
-            <span class="toast-hide-button" role="button" tabindex="0" onclick="app.$.toast.hide()">Ok</span>
+        <paper-toast id="toast ">
+            <span class="toast-hide-button " role="button " tabindex="0 " onclick="app.$.toast.hide() ">Ok</span>
         </paper-toast>
 
         <!-- Uncomment next block to enable Service Worker support (1/2) -->
         <!--
-    <paper-toast id="caching-complete"
-                 duration="6000"
-                 text="Caching complete! This app will work offline.">
+    <paper-toast id="caching-complete "
+                 duration="6000 "
+                 text="Caching complete! This app will work offline. ">
     </paper-toast>
 
     <platinum-sw-register auto-register
                           clients-claim
                           skip-waiting
-                          base-uri="bower_components/platinum-sw/bootstrap"
-                          on-service-worker-installed="displayInstalledToast">
-      <platinum-sw-cache default-cache-strategy="fastest"
-                         cache-config-file="cache-config.json">
+                          base-uri="bower_components/platinum-sw/bootstrap "
+                          on-service-worker-installed="displayInstalledToast ">
+      <platinum-sw-cache default-cache-strategy="fastest "
+                         cache-config-file="cache-config.json ">
       </platinum-sw-cache>
     </platinum-sw-register>
     -->
@@ -211,7 +212,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
 
     <!-- build:js scripts/app.js -->
-    <script src="scripts/app.js"></script>
+    <script src="scripts/app.js "></script>
     <!-- endbuild-->
 </body>
 

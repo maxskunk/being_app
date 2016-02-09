@@ -69,6 +69,21 @@
                 bottom: 0;
                 left: 0;
             }
+            
+            paper-progress {
+                position: relative;
+                width: 100%;
+                --paper-progress-active-color: blueviolet;
+                --paper-progress-height: 50px;
+                --paper-progress-container-color: rgba(255, 255, 255, .75);
+            }
+            
+            #duration {
+                text-align: center;
+                line-height: 50px;
+                font-size: 11px;
+                color: blueviolet;
+            }
 
         </style>
         <div id="wrapper" class="layout-horizontal" on-click="playPause">
@@ -80,11 +95,16 @@
                 <div id="title">{{ title }}</div>
                 <!-- Audio HTML5 element -->
                 <audio id="audio" src="{{ src }}"></audio>
+                <paper-progress value="10" id="progress"></paper-progress>
             </div>
             <div id="right" class="self-end">
-                <!-- ... -->
+                <!-- Duration -->
+                <div id="duration" class="fit">
+                    <span class="fit">{{ _convertSecToMin(duration) }}</span>
+                </div>
             </div>
         </div>
+
     </template>
 
     <script>
@@ -92,8 +112,19 @@
             is: 'audio-player',
             properties: {
                 title: String,
-                src: String
+                src: String,
+                duration: {
+                    type: Number,
+                    value: 0
+                }
             },
+            // Register event listeners
+
+            listeners: {
+                'audio.loadedmetadata': '_onCanPlay',
+                'audio.playing': '_startProgressTimer'
+            },
+
             playPause: function(e) {
                 e.preventDefault();
 
@@ -104,6 +135,43 @@
                 } else {
                     player.$.audio.pause();
                 }
+            },
+            // When metadata is loaded and player can start playing
+
+            _onCanPlay: function() {
+                var player = this;
+                player.$.progress.max = player.$.audio.duration * 1000;
+                player.duration = player.$.audio.duration;
+            },
+
+            // Start the progress timer
+
+            _startProgressTimer: function() {
+
+                var player = this;
+                player.timer = {};
+
+                if (player.timer.sliderUpdateInterval) {
+                    clearInterval(player.timer.sliderUpdateInterval);
+                }
+
+                player.timer.sliderUpdateInterval = setInterval(function() {
+                    if (player.$.audio.paused) {
+                        clearInterval(player.timer.sliderUpdateInterval);
+                    } else {
+                        player.$.progress.value = player.$.audio.currentTime * 1000;
+                        player.currentTime = player.$.audio.currentTime;
+                    }
+                }, 120);
+            },
+            // to convert seconds to 'm:ss' format
+            _convertSecToMin: function(seconds) {
+                if (seconds === 0) {
+                    return '';
+                }
+                var minutes = Math.floor(seconds / 60);
+                var secondsToCalc = Math.floor(seconds % 60) + '';
+                return minutes + ':' + (secondsToCalc.length < 2 ? '0' + secondsToCalc : secondsToCalc);
             }
         });
 
