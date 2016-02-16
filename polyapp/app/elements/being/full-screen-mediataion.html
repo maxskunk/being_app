@@ -1,0 +1,59 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<dom-module id="full-screen-meditation">
+    <template>
+        <!-- styling -->
+        <style>
+            :host {
+                width: 100%;
+                height: 100%;
+                background-color: aqua;
+            }
+            
+            #sceneViewer {
+                /*                height: 900px;*/
+            }
+            
+            meditation-player {
+                position: absolute;
+                bottom: 0px;
+            }
+            
+            div {
+                height: 100%;
+                width: 100%;
+            }
+            
+            iron-image {
+                width: 100%;
+                height: 100%;
+            }
+
+        </style>
+        <div>
+<!--Maybe Paper Tabs?-->
+            <iron-image sizing="cover" src="../../images/parallax/0.jpg">
+            </iron-image>
+            <!--<img src="../../images/parallax/0.jpg">-->
+        </div>
+
+
+        <meditation-player title="This is a title" music-src="audio/music/grey_sea.mp3" speech-src="audio/speech/transition_home.mp3"></meditation-player>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'full-screen-meditation',
+            properties: {
+                title: String,
+                speechSrc: String,
+                musicSrc: String,
+                duration: {
+                    type: Number,
+                    value: 0
+                }
+            }
+        });
+
+    </script>
+</dom-module>

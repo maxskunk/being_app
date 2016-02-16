@@ -64,34 +64,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <template is="dom-bind" id="app">
 
         <!-- Main Area -->
-        <paper-scroll-header-panel main id="headerPanelMain" condenses keep-condensed-header>
-            <!-- Main Toolbar -->
-            <paper-toolbar id="mainToolbar" class="tall">
-                <paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
 
-                <span class="space"></span>
+        <full-screen-meditation></full-screen-meditation>
+        <!--                <my-greeting></my-greeting>-->
 
-                <!-- Toolbar icons -->
-                <paper-icon-button icon="refresh"></paper-icon-button>
-                <paper-icon-button icon="search"></paper-icon-button>
+        <!--                                <meditation-player title="This IS Meditation" src="audio/speech/transition_home.mp3"></meditation-player>-->
 
-                <!-- Application name -->
-                <div class="middle middle-container">
-                    <div class="app-name">Being App</div>
-                </div>
 
-                <!-- Application sub title -->
-                <div class="bottom bottom-container">
-                    <div class="bottom-title">A simple, accessible form of stress relief, providing complex health and well-being benefits</div>
-                </div>
-            </paper-toolbar>
-            <paper-material elevation="1">
-                <!--                <my-greeting></my-greeting>-->
-                <meditation-player title="This is a title" music-src="audio/music/grey_sea.mp3" speech-src="audio/speech/transition_home.mp3"></meditation-player>
-                <!--                                <meditation-player title="This IS Meditation" src="audio/speech/transition_home.mp3"></meditation-player>-->
-
-        </paper-scroll-header-panel>
-        </paper-drawer-panel>
 
         <!--
         <paper-toast id="toast ">
