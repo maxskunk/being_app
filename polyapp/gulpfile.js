@@ -143,7 +143,7 @@ gulp.task('lint', ['ensureFiles'], function () {
         .pipe($.jscs())
         .pipe($.jscsStylish.combineWithHintResults())
         .pipe($.jshint.reporter('jshint-stylish'));
-    //  .pipe($.if(!browserSync.active, $.jshint.reporter('fail')));
+    // .pipe($.if(!browserSync.active, $.jshint.reporter('fail')));
 
 });
 
