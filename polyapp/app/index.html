@@ -62,10 +62,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <body unresolved>
     <span id="browser-sync-binding"></span>
     <template is="dom-bind" id="app">
+        <style>
+            body {
+                margin: 0px;
+                background-color: black;
+            }
+            
+            iron-pages {
+                left: 0px;
+            }
+            
+            iron-image {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                opacity: .3;
+            }
+
+        </style>
 
         <!-- Main Area -->
-        <guided-speak-it></guided-speak-it>
-<!--<full-screen-meditation></full-screen-meditation>-->
+        <iron-image sizing="cover" src="images/parallax/1.jpg">
+        </iron-image>
+
+        <iron-pages selected="1">
+            <guided-speak-it></guided-speak-it>
+            <style-select-page></style-select-page>
+            <full-screen-meditation></full-screen-meditation>
+        </iron-pages>
+
+
+        <!--<full-screen-meditation></full-screen-meditation>-->
         <!--                <my-greeting></my-greeting>-->
 
         <!--                                <meditation-player title="This IS Meditation" src="audio/speech/transition_home.mp3"></meditation-player>-->
