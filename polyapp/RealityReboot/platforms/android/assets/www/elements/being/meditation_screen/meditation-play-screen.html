@@ -1,0 +1,166 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<dom-module id="meditation-play-screen">
+    <template>
+        <!-- styling -->
+        <style>
+            :host {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+            }
+            
+            .container {
+                position: relative;
+                height: 100%;
+                @apply(--layout-vertical);
+                @apply(--layout-center);
+                background: var(--background-color);
+            }
+            
+            .flex-center-justified {
+                @apply(--layout-horizontal);
+                @apply(--layout-center-justified);
+                @apply(--layout-center);
+            }
+            
+            .mainIcon {
+                height: 150px;
+                width: 90%;
+            }
+            
+            paper-textarea {
+                width: 80%;
+            }
+            
+            .navbuttoncontainer {
+                width: 100%;
+                margin-top: 60px;
+            }
+            
+            .navbutton {
+                margin-bottom: 14px;
+                /* height: 35px; */
+                vertical-align: middle;
+                padding: 5px;
+                padding-left: 25px;
+                background: var(--nav-background-color);
+            }
+            
+            .navbutton[unavailable] {
+                color: #a79d9d;
+                border: 1px dotted grey;
+            }
+            
+            .backNav {
+                position: absolute;
+                bottom: 15px;
+                left: 20px;
+            }
+            
+            .backBtn {
+                float: left;
+                width: 30px;
+                height: 30px;
+            }
+            
+            .backText {
+                float: left;
+                /*                display: inline-block;*/
+                font-size: 20px;
+                padding-left: 10px;
+                padding-top: 5px;
+                /*                color: green;*/
+            }
+
+        </style>
+        <div class="container">
+            <h2>{{pageData.headerLabel}}</h2>
+            <iron-image class="mainIcon" sizing="contain" src="{{pageData.imgSrc}}">
+            </iron-image>
+
+            <meditation-player id="medPlayer" title="This is a title" background-colors="{{pageData.backgroundColor}}"></meditation-player>
+            <!--
+<div class="navbuttoncontainer">
+    <template is="dom-repeat" items="{{pageData.navbuttons}}">
+        <div class="navbutton" on-tap="navTo" nav-loc="{{item.location}}" is-unavailable="{{item.disabled}}" unavailable$="{{item.disabled}}">{{item.label}}</div>
+    </template>
+</div>
+-->
+            <div class="backNav" on-tap="sendBack">
+                <iron-image class="backBtn" sizing="contain" src="../../../images/icons/back.png"></iron-image>
+                <div class="backText">Go Back</div>
+            </div>
+        </div>
+
+    </template>
+
+    <script>
+        Polymer({
+            is: 'meditation-play-screen',
+            //            behaviors: [Polymer.NeonAnimatableBehavior],
+            properties: {
+                curPage: {
+                    type: Number,
+                    value: 0
+                },
+                pageData: {
+                    type: Object,
+                    value: {
+                        "pageType": "medPlayer",
+                        "pageId": "release_med_heart",
+                        "headerLabel": "Heart",
+                        "audioFile": "../../audio/meditations/heart.mp3",
+                        "backgroundColor": {
+                            "color1": "#79c144",
+                            "color2": "#256e26"
+                        },
+                        "imgSrc": "images/icons/monk_upset.png",
+                        "backNav": "start"
+                    },
+                    observer: "_backgroundChange"
+                },
+                // animationConfig: { // value: function () { // return { // 'entry': { // name: 'slide-from-right-animation', // node: this // }, // 'exit': { // name: 'slide-left-animation', // node: this // } // } // } // }
+
+            },
+            // observers: [ // '_backgroundChange(backgroundColorOne, backgroundColorTwo)' // ],
+
+            _backgroundChange: function(newValue) {
+
+                if (newValue) {
+                    this.customStyle['--background-color'] = '-webkit-linear-gradient(left, ' + newValue.backgroundColor.color1 + ', ' + newValue.backgroundColor.color2 + ')';
+                    this.customStyle['--nav-background-color'] = '-webkit-linear-gradient(top, ' + newValue.backgroundColor.color1 + ', ' + newValue.backgroundColor.color2 + ')';
+                    this.updateStyles();
+                }
+
+
+
+
+            },
+            pageInit: function() {
+                //Wait to set source on nit
+                this.$$('#medPlayer').setSource(this.pageData.audioFile);
+            },
+            navTo: function(e) {
+                if (!e.target.isUnavailable) {
+                    this.fire('navTo', {
+                        navTarget: e.target.navLoc
+                    });
+                }
+
+            },
+            sendBack: function(e) {
+                this.$$('#medPlayer').stopSound();
+                console.log("Detected back!");
+                if (!e.target.isUnavailable) {
+                    this.fire('navTo', {
+                        navTarget: this.pageData.backNav,
+                        isBack: true
+                    });
+                }
+
+            }
+        });
+
+    </script>
+</dom-module>

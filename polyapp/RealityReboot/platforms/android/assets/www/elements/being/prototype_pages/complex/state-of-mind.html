@@ -1,0 +1,65 @@
+<link rel="import" href="../../../../bower_components/polymer/polymer.html">
+
+<dom-module id="state-of-mind">
+    <template>
+        <!-- styling -->
+        <style>
+            :host {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+            }
+            
+            iron-image {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                opacity: 1;
+            }
+
+        </style>
+        <audio id="audio" src="../../../../audio/speech/whats%20on%20your%20mind%20intro.MP3"></audio>
+        <iron-image sizing="cover" src="../../../../prototype_images/GuidedRelease.png">
+        </iron-image>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'state-of-mind',
+            behaviors: [Polymer.NeonAnimatableBehavior],
+            properties: {
+                imgSrc: {
+                    type: String,
+                },
+                animationConfig: {
+                    value: function() {
+                        return {
+                            'entry': {
+                                name: 'slide-from-right-animation',
+                                node: this
+                            },
+                            'exit': {
+                                name: 'slide-left-animation',
+                                node: this
+                            }
+                        }
+                    }
+                }
+
+            },
+            listeners: {
+                'tap': 'regularTap'
+            },
+            regularTap: function() {
+                console.log("SimpleProtoNext");
+                this.$$("#audio").pause();
+                this.fire('next');
+            },
+            pageInit: function() {
+                console.log("State OF Mind Ready, Playing Audio");
+                this.$$("#audio").play();
+            }
+        });
+
+    </script>
+</dom-module>

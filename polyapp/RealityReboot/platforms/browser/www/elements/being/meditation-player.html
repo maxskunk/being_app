@@ -1,0 +1,292 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/paper-styles/typography.html">
+
+<dom-module id="meditation-player">
+    <template>
+        <!-- styling -->
+        <style>
+            :host {
+                width: 100%;
+            }
+            
+            #left,
+            #right {
+                height: 50px;
+                width: 50px;
+                position: relative;
+            }
+            
+            #left {
+                background-color: blueviolet;
+            }
+            /* Helpers */
+            
+            .layout-horizontal {
+                display: flex;
+                -ms-flex-direction: row;
+                -webkit-flex-direction: row;
+                flex-direction: row;
+            }
+            
+            .flex {
+                -ms-flex: 1;
+                -webkit-flex: 1;
+                flex: 1;
+            }
+            
+            .self-start {
+                -ms-align-self: flex-start;
+                -webkit-align-self: flex-start;
+                align-self: flex-start;
+            }
+            
+            .self-end {
+                -ms-align-self: flex-end;
+                -webkit-align-self: flex-end;
+                align-self: flex-end;
+            }
+            
+            #title {
+                position: absolute;
+                color: blueviolet;
+                font-size: 15px;
+                text-align: center;
+                line-height: 50px;
+                z-index: 2;
+            }
+            
+            #wrapper {
+                position: relative;
+                box-shadow: 0 1px 2px rgba(0, 0, 0, .3);
+                cursor: pointer;
+            }
+            
+            .fit {
+                position: absolute;
+                margin: auto;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+            }
+            
+            paper-progress {
+                position: relative;
+                width: 100%;
+                --paper-progress-active-color: blueviolet;
+                --paper-progress-height: 50px;
+                --paper-progress-container-color: rgba(255, 255, 255, .75);
+            }
+            
+            #duration {
+                text-align: center;
+                line-height: 50px;
+                font-size: 11px;
+                color: blueviolet;
+            }
+            
+            .navbuttoncontainer {
+                /*                position: absolute;*/
+                bottom: 100px;
+                /* left: 50%; */
+                position: absolute;
+                width: 100%;
+            }
+            
+            .centerContainer {
+                position: relative;
+                @apply(--layout-vertical);
+                @apply(--layout-center);
+            }
+            
+            paper-button {
+                font-family: 'theFont';
+                background-color: white;
+                color: black;
+                border: 3px solid var(--nav-border-color, black);
+                border-radius: 12px;
+                margin: 15px;
+                padding: 15px 30px;
+                height: 50px;
+                /*                background: var(--nav-background-color);*/
+            }
+            
+            .playBtn {
+                width: 20px;
+                height: 20px;
+                margin-right: 8px;
+            }
+            
+            .playBtn,
+            .play {
+                margin-left: 8px;
+            }
+            
+            .navrow {
+                display: inherit;
+            }
+        </style>
+        <div class="navbuttoncontainer">
+            <div class="centerContainer">
+                <div class="navrow">
+                    <paper-button on-tap="back">
+                        <iron-image sizing="contain" class="playBtn" src="../../images/icons/rewind.png"></iron-image> 10</paper-button>
+                    <paper-button on-tap="playPause">
+                        [[playText]]
+                        <iron-image sizing="contain" class="playBtn play" src="../../images/icons/play.png" hidden$="{{isPlaying}}"></iron-image>
+                        <iron-image sizing="contain" class="playBtn" src="../../images/icons/pause.png" hidden$="{{!isPlaying}}"></iron-image>
+                    </paper-button>
+
+                </div>
+
+                <paper-button on-tap="stopSound">
+                    <iron-image sizing="contain" class="playBtn" src="../../images/icons/stop.png"></iron-image> Stop</paper-button>
+
+            </div>
+
+        </div>
+        <div id="wrapper" class="layout-horizontal" on-click="playPause">
+            <!--
+<div id="left" class="self-start">
+
+</div>
+-->
+            <div class="flex">
+                <!-- Title -->
+                <!--                <div id="title">{{ title }}</div>-->
+                <!-- Audio HTML5 element -->
+                <!--                <audio id="audio"></audio>-->
+                <!--                <audio id="music" src="{{ musicSrc }}"></audio>-->
+                <!--                <paper-progress value="10" id="progress"></paper-progress>-->
+            </div>
+            <!--            <div id="right" class="self-end">-->
+            <!-- Duration -->
+            <!--
+<div id="duration" class="fit">
+    <span class="fit">{{ _convertSecToMin(duration) }}</span>
+</div>
+-->
+            <!--            </div>-->
+        </div>
+
+    </template>
+
+    <script>
+        Polymer({
+            is: 'meditation-player',
+            properties: {
+                player: Object,
+                title: String,
+                isPlaying: {
+                    type: Boolean,
+                    value: false
+                },
+                speechSrc: {
+                    type: String,
+                    observer: 'sourceUpdate'
+                },
+                musicSrc: String,
+                duration: {
+                    type: Number,
+                    value: 0
+                },
+                playText: {
+                    type: String,
+                    value: "Play"
+                },
+                backgroundColors: {
+                    type: Object,
+                    observer: 'setBgColor'
+                }
+            },
+            // Register event listeners
+
+//            listeners: {
+//                'audio.loadedmetadata': '_onCanPlay',
+//                'audio.playing': '_startProgressTimer'
+//            },
+
+            setBgColor: function (e) {
+                var newValue = e;
+                this.customStyle['--nav-background-color'] = '-webkit-linear-gradient(top, ' + newValue.color1 + ', ' + newValue.color2 + ')';
+                this.customStyle['--nav-border-color'] = newValue.color1;
+                this.updateStyles();
+            },
+
+            playPause: function (e) {
+
+                e.preventDefault();
+                if (!this.isPlaying) {
+                    this.playText = "Pause";
+
+                    this.player.play();
+                    this.isPlaying = true;
+                } else {
+                    this.playText = "Play";
+
+                    this.player.pause();
+                    this.isPlaying = false;
+                }
+            },
+            // When metadata is loaded and player can start playing
+
+            _onCanPlay: function () {
+                //var player = this;
+                //player.$.progress.max = player.$.audio.duration * 1000;
+                //player.duration = player.$.audio.duration;
+            },
+
+            // Start the progress timer
+
+            // _startProgressTimer: function() { // // //var player = this; // // player.timer = {}; // // if (player.timer.sliderUpdateInterval) { // clearInterval(player.timer.sliderUpdateInterval); // } // // player.timer.sliderUpdateInterval = setInterval(function() { // if (player.$.audio.paused) { // clearInterval(player.timer.sliderUpdateInterval); // } else { // //player.$.progress.value = player.$.audio.currentTime * 1000; // player.currentTime = player.$.audio.currentTime; // } // }, 120); // },
+            // to convert seconds to 'm:ss' format
+            _convertSecToMin: function (seconds) {
+                if (seconds === 0) {
+                    return '';
+                }
+                var minutes = Math.floor(seconds / 60);
+                var secondsToCalc = Math.floor(seconds % 60) + '';
+                return minutes + ':' + (secondsToCalc.length < 2 ? '0' + secondsToCalc : secondsToCalc);
+            },
+            setSource: function (newSource) {
+                this.playImg = "../../images/icons/play.png";
+                //this.player = new Media('/www/audio/meditations/' + newSource, function (e) {
+                //this.player = new Media('/android_asset/www/audio/meditations/' + newSource, function (e) {
+                this.player = new Media(cordova.file.applicationDirectory+'audio/meditations/' + newSource, function (e) {
+                    console.log("WE HAD SUCCESS" + e);
+                }, function (e) {
+                    console.log("WE HAD AN ERROR" + e);
+
+                });
+                this.isPlaying = false;
+            },
+            stopSound: function (e) {
+                console.log("attempting to stop");
+                //var player = this;
+                //player.currentTime = 0;
+                // player.$.audio.pause();
+                this.player.stop();
+                this.isPlaying = false;
+
+            },
+            back: function (e) {
+                var self = this;
+                this.player.getCurrentPosition(
+                    // success callback
+                    function (position) {
+                        if (position > 10) {
+                            var newPos = (position * 1000) - 10000;
+                            self.player.seekTo(newPos);
+                        } else {
+                            self.player.seekTo(0);
+                        }
+                    },
+                    // error callback
+                    function (e) {
+                        console.log("Error getting pos=" + e);
+                    }
+                );
+            }
+        });
+    </script>
+</dom-module>

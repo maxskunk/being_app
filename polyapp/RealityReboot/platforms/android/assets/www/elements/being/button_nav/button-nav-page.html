@@ -1,0 +1,179 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<dom-module id="button-nav-page">
+    <template>
+        <!-- styling -->
+        <style>
+            :host {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+            }
+            
+            .container {
+                position: relative;
+                height: 100%;
+                @apply(--layout-vertical);
+                @apply(--layout-center);
+                background: var(--background-color);
+            }
+            
+            .flex-center-justified {
+                @apply(--layout-horizontal);
+                @apply(--layout-center-justified);
+                @apply(--layout-center);
+            }
+            
+            .mainIcon {
+                height: 20%;
+                width: 90%;
+            }
+            
+            paper-textarea {
+                width: 80%;
+            }
+            
+            .navbuttoncontainer {
+                width: 100%;
+                margin-top: 10%;
+                position: relative;
+            }
+            
+            .navbutton {
+                margin-bottom: var(--button-margin-size, 14px);
+                /*14px;*/
+                /* height: 35px; */
+                vertical-align: middle;
+                padding: 5px;
+                padding-left: 25px;
+                background: var(--nav-background-color);
+                position: relative;
+            }
+            
+            .navbutton[unavailable] {
+                color: #a79d9d;
+                border: 1px dotted grey;
+            }
+            
+            .backNav {
+                position: absolute;
+                bottom: 15px;
+                left: 20px;
+            }
+            
+            .backBtn {
+                float: left;
+                width: 30px;
+                height: 30px;
+            }
+            
+            .backText {
+                float: left;
+                /*                display: inline-block;*/
+                font-size: 20px;
+                padding-left: 10px;
+                padding-top: 5px;
+                /*                color: green;*/
+            }
+            
+            .comingSoon {
+                position: absolute;
+                /* top: 50%; */
+                display: inline;
+                font-size: 12px;
+                /* vertical-align: middle; */
+                margin-left: 13px;
+                background: #9b1E22;
+                color: white;
+                border: black solid 2px;
+                border-radius: 6px;
+                right: 10px;
+                padding: 5px;
+                top: 50%;
+                transform: translate(0, -50%);
+                vertical-align: middle;
+                /* vertical-align: middle; */
+            }
+            
+            .navbutton {
+                font-size: var(--font-size-value);
+            }
+        </style>
+
+        <div class="container">
+            <h2>{{pageData.headerLabel}}</h2>
+            <iron-image class="mainIcon" sizing="contain" src="{{pageData.imgSrc}}">
+            </iron-image>
+
+
+            <div class="navbuttoncontainer">
+                <template is="dom-repeat" items="{{pageData.navbuttons}}">
+                    <div class="navbutton" on-tap="navTo" nav-loc="{{item.location}}" is-unavailable="{{item.disabled}}" unavailable$="{{item.disabled}}">{{item.label}}
+                        <div class="comingSoon" hidden$="{{!item.disabled}}">Coming Soon</div>
+                    </div>
+
+                </template>
+            </div>
+
+            <div class="backNav" on-tap="sendBack">
+                <iron-image class="backBtn" sizing="contain" src="../../../images/icons/back.png"></iron-image>
+                <div class="backText">Go Back</div>
+            </div>
+        </div>
+
+    </template>
+
+    <script>
+        Polymer({
+            is: 'button-nav-page',
+            //            behaviors: [Polymer.NeonAnimatableBehavior],
+            properties: {
+                curPage: {
+                    type: Number,
+                    value: 0
+                },
+                pageData: {
+                    type: Object,
+                    observer: "_backgroundChange"
+                },
+                // animationConfig: { // value: function () { // return { // 'entry': { // name: 'slide-from-right-animation', // node: this // }, // 'exit': { // name: 'slide-left-animation', // node: this // } // } // } // }
+
+            },
+            // observers: [ // '_backgroundChange(backgroundColorOne, backgroundColorTwo)' // ],
+
+            _backgroundChange: function (newValue) {
+
+                if (newValue) {
+                    this.customStyle['--background-color'] = '-webkit-linear-gradient(left, ' + newValue.backgroundColor.color1 + ', ' + newValue.backgroundColor.color2 + ')';
+                    this.customStyle['--nav-background-color'] = '-webkit-linear-gradient(top, ' + newValue.backgroundColor.color1 + ', ' + newValue.backgroundColor.color2 + ')';
+                    this.updateStyles();
+                }
+
+
+
+
+            },
+            pageInit: function () {
+                //Do Nothing
+            },
+            navTo: function (e) {
+                if (!e.target.isUnavailable) {
+                    this.fire('navTo', {
+                        navTarget: e.target.navLoc
+                    });
+                }
+
+            },
+            sendBack: function (e) {
+                console.log("Detected back!");
+                if (!e.target.isUnavailable) {
+                    this.fire('navTo', {
+                        navTarget: this.pageData.backNav,
+                        isBack: true
+                    });
+                }
+
+            }
+        });
+    </script>
+</dom-module>

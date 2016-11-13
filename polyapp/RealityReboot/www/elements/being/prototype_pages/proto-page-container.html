@@ -1,0 +1,167 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<dom-module id="proto-page-container">
+    <template>
+        <!-- styling -->
+        <style>
+            :host {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                /*
+                max-width: 562px;
+                max-height: 1000px;
+*/
+            }
+            
+            #proto-pages {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+            }
+            /*
+            .flex-center-justified {
+                @apply(--layout-horizontal);
+                @apply(--layout-center-justified);
+                @apply(--layout-center);
+            }
+*/
+        </style>
+        <!--        <div class="container fullbleed layout vertical">-->
+        <iron-ajax auto url="../../../data/data.json" handle-as="json" last-response="{{jsondata}}"></iron-ajax>
+        <iron-media-query query="(max-width: 320px)" query-matches="{{isSmall}}"></iron-media-query>
+
+
+        <div class="protoContainer">
+            <neon-animated-pages class="flex" id="proto-pages" selected="[[curPage]]" on-iron-select="pageChange" entry-animation="[[entryAnimation]]" exit-animation="[[exitAnimation]]">
+                <!--                <meditation-play-screen></meditation-play-screen>-->
+                <home-page class="page">
+                </home-page>
+                <template is="dom-repeat" items="{{jsondata.pages}}">
+                    <template is="dom-if" if="{{item.isButtonNav}}">
+                        <button-nav-page page-data="{{item}}"></button-nav-page>
+                    </template>
+
+
+                    <template is="dom-if" if="{{item.isMedPlayer}}">
+                        <meditation-play-screen page-data="{{item}}"></meditation-play-screen>
+                    </template>
+                </template>
+            </neon-animated-pages>
+        </div>
+
+
+
+    </template>
+
+    <script>
+        Polymer({
+            is: 'proto-page-container',
+            behaviors: [Polymer.NeonAnimatableBehavior],
+            attached: function () {
+
+                var self = this;
+                document.querySelector('#proto-pages').addEventListener('navTo', function (e) {
+                    self.navToPage(e);
+                }, this);
+
+
+
+            },
+
+
+            properties: {
+                curPage: {
+                    type: Number,
+                    value: 0
+                },
+                isSmall: {
+                    type: Boolean,
+                    value: false,
+                    observer: "smallTrigger"
+                },
+                jsondata: {
+                    type: Object,
+                    observer: "testFunction"
+
+                },
+                tempData: {
+                    type: Object
+                },
+                entryAnimation: {
+                    type: String,
+                    value: 'slide-from-right-animation'
+                },
+                exitAnimation: {
+                    type: String,
+                    value: 'slide-left-animation'
+                },
+            },
+            nextPage: function () {
+
+                console.log("Next Page!");
+                if (this.curPage + 1 < this.jsondata.pages.length + 1) {
+                    this.curPage++;
+                } else {
+                    console.log("End of Page Stack");
+                }
+
+            },
+            navToPage: function (e) {
+                var root = this;
+                //Setup Animations
+                if (e.detail.isBack) {
+                    this.entryAnimation = 'slide-from-left-animation';
+                    this.exitAnimation = 'slide-right-animation';
+                } else {
+                    this.entryAnimation = 'slide-from-right-animation';
+                    this.exitAnimation = 'slide-left-animation';
+                }
+
+                console.log("Nav To: " + e.detail.navTarget);
+                if (e.detail.navTarget == "start") {
+                    this.curPage = 0;
+                } else {
+                    //Find the page in the collection
+                    var pages = this.jsondata.pages;
+                    var navPageNum;
+                    for (i = 0; i < pages.length; i++) {
+                        if (pages[i].pageId == e.detail.navTarget) {
+                            navPageNum = i + 1;
+                            break;
+                        }
+
+                    }
+                    if (navPageNum) {
+                        this.curPage = navPageNum;
+                        // document.querySelector('#proto-pages').selected.pageInit();
+                    } else {
+                        console.log("Nav Page Not Found: " + e.detail.navTarget);
+                    }
+                }
+            },
+            pageChange: function (e) {
+                e.detail.item.pageInit();
+                //e.detail.pageInit();
+            },
+            smallTrigger: function (newValue) {
+                if (newValue) {
+                    this.customStyle['--font-size-value'] = '25px';
+                    this.customStyle['--button-margin-size'] = '5px';
+
+                    //this.fontStyle.fontSize = 40 px;
+                } else {
+                    this.customStyle['--font-size-value'] = '30px';
+                    this.customStyle['--button-margin-size'] = '14px';
+                    //this.fontStyle.fontSize = 20 px;
+                }
+                this.updateStyles();
+
+            },
+            testFunction: function (e) {
+                console.log("This is a test function: " + this.jsondata.pages[0].headerLabel);
+            }
+
+        });
+    </script>
+</dom-module>

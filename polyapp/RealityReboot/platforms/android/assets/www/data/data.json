@@ -1,0 +1,258 @@
+{
+    "pages": [{
+        "isButtonNav": true,
+        "pageId": "restore_selection",
+        "headerLabel": "What Do You Need?",
+
+        "backgroundColor": {
+            "color1": "#dd4c6c",
+            "color2": "#8d2a43"
+        },
+        "imgSrc": "images/icons/monk_restful.png",
+        "navbuttons": [{
+                "label": "Connect To Intuition",
+                "location": "restore_med_intuition",
+                "disabled": false
+                            }, {
+                "label": "Restore Calm",
+                "location": "restore_med_calm",
+                "disabled": true
+                            }, {
+                "label": "Pause To Rejuvenate",
+                "location": "restore_med_rejuvenate",
+                "disabled": true
+                            }, {
+                "label": "Affirmations",
+                "location": "",
+                "disabled": true
+                            }
+
+                        ],
+        "backNav": "start"
+    }, {
+        "isMedPlayer": true,
+        "pageId": "restore_med_calm",
+        "headerLabel": "Restore Calm",
+        "audioFile": "restorecalm.mp3",
+        "backgroundColor": {
+            "color1": "#dd4c6c",
+            "color2": "#8d2a43"
+        },
+        "imgSrc": "images/icons/monk_restful.png",
+        "backNav": "restore_selection"
+    }, {
+        "isMedPlayer": true,
+        "pageId": "restore_med_rejuvenate",
+        "headerLabel": "Pause To Rejuvenate",
+        "audioFile": "rejeuvanate.mp3",
+        "backgroundColor": {
+            "color1": "#dd4c6c",
+            "color2": "#8d2a43"
+        },
+        "imgSrc": "images/icons/monk_restful.png",
+        "backNav": "restore_selection"
+    }, {
+        "isMedPlayer": true,
+        "pageId": "restore_med_intuition",
+        "headerLabel": "Connect To Your Intuition",
+        "audioFile": "heart.mp3",
+        "backgroundColor": {
+            "color1": "#dd4c6c",
+            "color2": "#8d2a43"
+        },
+        "imgSrc": "images/icons/monk_restful.png",
+        "backNav": "restore_selection"
+    }, {
+        "isButtonNav": true,
+        "pageId": "release_selection",
+        "headerLabel": "What Are You Feeling?",
+
+        "backgroundColor": {
+            "color1": "#79c144",
+            "color2": "#256e26"
+        },
+        "imgSrc": "images/icons/monk_upset.png",
+        "navbuttons": [{
+                "label": "Stress",
+                "location": "release_stress",
+                "disabled": false
+                            }, {
+                "label": "Fear",
+                "location": "release_fear",
+                "disabled": false
+                            }, {
+                "label": "Fatigue",
+                "location": "release_fatigue",
+                "disabled": false
+                            },
+            {
+                "label": "Anger",
+                "location": "release_anger",
+                "disabled": false
+                            }
+
+                        ],
+        "backNav": "start"
+    }, {
+        "isButtonNav": true,
+        "pageId": "release_stress",
+        "headerLabel": "Why?",
+
+        "backgroundColor": {
+            "color1": "#79c144",
+            "color2": "#256e26"
+        },
+        "imgSrc": "images/icons/monk_upset.png",
+        "navbuttons": [{
+                "label": "Distracted/not in the moment",
+                "location": "release_med_distracted",
+                "disabled": false
+                            }, {
+                "label": "Losing Control",
+                "location": "",
+                "disabled": true
+                            }, {
+                "label": "Not Enough Time",
+                "location": "",
+                "disabled": true
+                            }
+
+
+                        ],
+        "backNav": "release_selection"
+    }, {
+        "isButtonNav": true,
+        "pageId": "release_fear",
+        "headerLabel": "Why?",
+
+        "backgroundColor": {
+            "color1": "#79c144",
+            "color2": "#256e26"
+        },
+        "imgSrc": "images/icons/monk_upset.png",
+        "navbuttons": [{
+                "label": "Rejection",
+                "location": "release_med_rejection",
+                "disabled": false
+                            }, {
+                "label": "Trying Something New",
+                "location": "",
+                "disabled": true
+                            }, {
+                "label": "Change/Unknown",
+                "location": "",
+                "disabled": true
+                            }, {
+                "label": "Insecure / Not Good Enough",
+                "location": "",
+                "disabled": true
+                            }
+
+                        ],
+        "backNav": "release_selection"
+    }, {
+        "isButtonNav": true,
+        "pageId": "release_fatigue",
+        "headerLabel": "Why?",
+
+        "backgroundColor": {
+            "color1": "#79c144",
+            "color2": "#256e26"
+        },
+        "imgSrc": "images/icons/monk_upset.png",
+        "navbuttons": [{
+                "label": "Can't Sleep",
+                "location": "release_med_sleep",
+                "disabled": false
+                            }, {
+                "label": "Working Too Hard",
+                "location": "",
+                "disabled": true
+                            }, {
+                "label": "Can't Shut My Mind Off",
+                "location": "",
+                "disabled": true
+                            }, {
+                "label": "Jet-Lagged",
+                "location": "",
+                "disabled": true
+                            }
+
+                        ],
+        "backNav": "release_selection"
+    }, {
+        "isButtonNav": true,
+        "pageId": "release_anger",
+        "headerLabel": "Why?",
+
+        "backgroundColor": {
+            "color1": "#79c144",
+            "color2": "#256e26"
+        },
+        "imgSrc": "images/icons/monk_upset.png",
+        "navbuttons": [{
+                "label": "Undermined",
+                "location": "",
+                "disabled": true
+                            }, {
+                "label": "Annoyed",
+                "location": "",
+                "disabled": true
+                            }, {
+                "label": "Bitter",
+                "location": "",
+                "disabled": true
+                            }, {
+                "label": "Hurt",
+                "location": "release_med_hurt",
+                "disabled": true
+                            }
+
+                        ],
+        "backNav": "release_selection"
+    }, {
+        "isMedPlayer": true,
+        "pageId": "release_med_hurt",
+        "headerLabel": "Release Hurt",
+        "audioFile": "hurt.mp3",
+        "backgroundColor": {
+            "color1": "#79c144",
+            "color2": "#256e26"
+        },
+        "imgSrc": "images/icons/monk_upset.png",
+        "backNav": "release_anger"
+    }, {
+        "isMedPlayer": true,
+        "pageId": "release_med_rejection",
+        "headerLabel": "Release Rejection",
+        "audioFile": "rejection.mp3",
+        "backgroundColor": {
+            "color1": "#79c144",
+            "color2": "#256e26"
+        },
+        "imgSrc": "images/icons/monk_upset.png",
+        "backNav": "release_fear"
+    }, {
+        "isMedPlayer": true,
+        "pageId": "release_med_sleep",
+        "headerLabel": "Release Fatigue",
+        "audioFile": "sleep.mp3",
+        "backgroundColor": {
+            "color1": "#79c144",
+            "color2": "#256e26"
+        },
+        "imgSrc": "images/icons/monk_upset.png",
+        "backNav": "release_fatigue"
+    }, {
+        "isMedPlayer": true,
+        "pageId": "release_med_distracted",
+        "headerLabel": "Release Distraction",
+        "audioFile": "beinginthemoment.mp3",
+        "backgroundColor": {
+            "color1": "#79c144",
+            "color2": "#256e26"
+        },
+        "imgSrc": "images/icons/monk_upset.png",
+        "backNav": "release_stress"
+    }]
+}
